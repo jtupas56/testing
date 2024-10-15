@@ -8,14 +8,44 @@ package test;
  *
  * @author joshuatupas
  */
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.security.SecureRandom;
+import java.util.Base64;
+import javax.swing.*;
 public class q extends javax.swing.JFrame {
-
-    /**
-     * Creates new form q
-     */
+    private SecretKey key;
+    private byte[] iv;
     public q() {
         initComponents();
     }
+    private SecretKey generateKey() throws Exception {
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        keyGen.init(128); // Key size
+        return keyGen.generateKey();
+    }
+
+    private String encryptString(String str) throws Exception {
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(iv));
+        byte[] encryptedData = cipher.doFinal(str.getBytes());
+        // Return the Base64-encoded string
+        return Base64.getEncoder().encodeToString(encryptedData);
+    }
+
+    private String decryptString(byte[] encryptedData) throws Exception {
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(iv));
+        byte[] decryptedData = cipher.doFinal(encryptedData);
+        return new String(decryptedData);
+    }
+
+    // Convert hex string to byte array
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,9 +100,19 @@ public class q extends javax.swing.JFrame {
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
         fileButton.setText("File");
+        fileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fileButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(fileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, -1, -1));
 
         decryptButton.setText("Decrypt");
+        decryptButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decryptButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(decryptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -96,8 +136,39 @@ public class q extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void encryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encryptButtonActionPerformed
+        try {
+            String input = jTextField1.getText(); // Get input from JTextField
+            key = generateKey(); // Generate the encryption key
+            iv = new byte[16]; // Initialize the IV
+            new SecureRandom().nextBytes(iv); // Generate a random IV
 
+
+            String encryptedData = encryptString(input);
+
+            // Display the encrypted data (you can change this to save to a file)
+            JOptionPane.showMessageDialog(this, "Encrypted Data: " + encryptedData);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Encryption Error: " + e.getMessage());
+        }
+ 
     }//GEN-LAST:event_encryptButtonActionPerformed
+
+    private void fileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileButtonActionPerformed
+
+    }//GEN-LAST:event_fileButtonActionPerformed
+
+    private void decryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decryptButtonActionPerformed
+        try {
+            String encryptedBase64 = jTextField1.getText(); // Assume input is Base64 string
+            byte[] encryptedData = Base64.getDecoder().decode(encryptedBase64);
+            String decryptedString = decryptString(encryptedData);
+            JOptionPane.showMessageDialog(this, "Decrypted Data: " + decryptedString);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Decryption Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_decryptButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,14 +206,14 @@ public class q extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton decryptButton;
-    private javax.swing.JButton encryptButton;
-    private javax.swing.JButton fileButton;
+    public static javax.swing.JButton decryptButton;
+    public static javax.swing.JButton encryptButton;
+    public static javax.swing.JButton fileButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    public static javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

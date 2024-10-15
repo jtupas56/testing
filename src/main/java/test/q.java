@@ -28,13 +28,13 @@ public class q extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        encryptButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        Decrypt = new javax.swing.JButton();
+        fileButton = new javax.swing.JButton();
+        decryptButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,8 +47,13 @@ public class q extends javax.swing.JFrame {
         });
         jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(117, 111, 158, -1));
 
-        jButton1.setText("Encrypt");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 111, -1, -1));
+        encryptButton.setText("Encrypt");
+        encryptButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                encryptButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(encryptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 111, -1, -1));
 
         jLabel2.setText("Enter String");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 114, -1, -1));
@@ -64,17 +69,17 @@ public class q extends javax.swing.JFrame {
         jLabel5.setText("Choose a file:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
-        jButton2.setText("File");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, -1, -1));
+        fileButton.setText("File");
+        jPanel1.add(fileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, -1, -1));
 
-        Decrypt.setText("Decrypt");
-        jPanel1.add(Decrypt, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, -1, -1));
+        decryptButton.setText("Decrypt");
+        jPanel1.add(decryptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,6 +94,10 @@ public class q extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void encryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encryptButtonActionPerformed
+
+    }//GEN-LAST:event_encryptButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,9 +135,9 @@ public class q extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Decrypt;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton decryptButton;
+    private javax.swing.JButton encryptButton;
+    private javax.swing.JButton fileButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
